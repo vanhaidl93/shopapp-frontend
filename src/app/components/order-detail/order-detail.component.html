@@ -1,0 +1,101 @@
+<!-- HEADER -->
+<app-header></app-header>
+<!-- // HEADER -->
+
+<!-- ORDER CONFIRM -->
+<div class="container">
+  <div class="intro-section">
+    <h1>Chi tiết đơn hàng</h1>
+    <p>Xem thông tin chi tiết đơn hàng</p>
+  </div>
+  <!-- DETAILS INFO -->
+  <div class="row" *ngIf="order">
+    <div class="col-md-6">
+      <h2 class="product-header">Thông tin người nhận</h2>
+
+      <div class="mb-3">
+        <p class="form-label">Họ và tên: {{ order.fullName }}</p>
+      </div>
+      <div class="mb-3">
+        <div class="form-label">Email: {{ order.email }}</div>
+      </div>
+      <div class="mb-3">
+        <div class="form-label">Số điện thoại: {{ order.phoneNumber }}</div>
+      </div>
+      <div class="mb-3">
+        <div class="form-label">Địa chỉ: {{ order.shippingAddress }}</div>
+      </div>
+      <div class="mb-3">
+        <div class="form-label">Ghi chú: {{ order.note }}</div>
+      </div>
+      <div class="mb-3">
+        <div class="form-label">
+          Phương thức vận chuyển: {{ order.shippingMethod }}
+        </div>
+      </div>
+      <div class="mb-3">
+        <div class="form-label">
+          Phương thức thanh toán: {{ order.paymentMethod }}
+        </div>
+      </div>
+    </div>
+    <!-- // DETAILS INFO -->
+
+    <!-- ORDERED PRODUCTS -->
+    <div class="col-md-6">
+      <h2 class="product-order">Sản phẩm đã đặt hàng</h2>
+
+      <table>
+        <thead>
+          <tr>
+            <th scope="col" class="text-start">Sản phẩm</th>
+            <th scope="col">Số lượng</th>
+            <th scope="col">Đơn giá</th>
+            <th scope="col">Tổng giá</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let orderDetailResponse of order.orderDetailsResponse">
+            <td>
+              <div class="product-info">
+                <img
+                  [src]="orderDetailResponse.productResponse.urlImage"
+                  alt="Product image"
+                  class="product-image"
+                />
+                <span class="product-name">{{
+                  orderDetailResponse.productResponse.name
+                }}</span>
+              </div>
+            </td>
+            <td>{{ orderDetailResponse.numberOfProducts }}</td>
+            <td>
+              {{
+                orderDetailResponse.price
+                  | currency : "VND" : "symbol" : "1.0-0"
+              }}
+            </td>
+            <td>
+              {{
+                orderDetailResponse.totalMoney
+                  | currency : "VND" : "symbol" : "1.0-0"
+              }}
+            </td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="text-start mt-3">
+        <h4 class="header-text text-end">
+          Tổng giá:
+          {{ order.totalMoney | currency : "VND" : "symbol" : "1.0-0" }}
+        </h4>
+      </div>
+    </div>
+  </div>
+  <!-- // ORDERED PRODUCTS -->
+</div>
+<!-- // ORDER CONFIRM -->
+<!-- FOOTER  -->
+<app-footer></app-footer>
+<!-- // FOOTER -->

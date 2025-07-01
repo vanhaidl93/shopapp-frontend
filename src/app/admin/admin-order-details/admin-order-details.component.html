@@ -1,0 +1,67 @@
+<h1>This is detail order admin</h1>
+<div class="container">
+  <h1>Order Details</h1>
+
+  <div class="row">
+    <div class="col-md-6">
+      <h3>Order Information</h3>
+      <p><strong>Order ID:</strong> {{ orderResponse?.id }}</p>
+      <p><strong>User ID:</strong> {{ orderResponse?.userId }}</p>
+      <p><strong>Full Name:</strong> {{ orderResponse?.fullName }}</p>
+      <p><strong>Phone Number:</strong> {{ orderResponse?.phoneNumber }}</p>
+      <p><strong>Email:</strong> {{ orderResponse?.email }}</p>
+      <p><strong>Address:</strong> {{ orderResponse?.address }}</p>
+      <p><strong>Note:</strong> {{ orderResponse?.note }}</p>
+      <p><strong>Order Date:</strong> {{ orderResponse?.orderDate | date }}</p>
+
+      <div class="form-group">
+        <label for="statusSelect"><strong>Status:</strong></label>
+        <select
+          class="form-control"
+          id="statusSelect"
+          name="statusSelect"
+          [(ngModel)]="orderDto.status"
+        >
+          <option value="pending">Pending</option>
+          <option value="processing">Processing</option>
+          <option value="shipped">Shipped</option>
+          <option value="delivered">Delivered</option>
+          <option value="cancelled">Cancelled</option>
+        </select>
+      </div>
+    </div>
+
+    <h3>Order Details</h3>
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Product</th>
+          <th>Price</th>
+          <th>Quantity</th>
+          <th>Total</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr
+          *ngFor="
+            let orderDetailResponse of orderResponse?.orderDetailsResponse;
+            let i = index
+          "
+        >
+          <td>{{ orderDetailResponse.productResponse.name }}</td>
+          <td>
+            <p>{{ orderDetailResponse.productResponse.price }}</p>
+          </td>
+
+          <td>
+            <p>{{ orderDetailResponse.numberOfProducts }}</p>
+          </td>
+          <td>{{ orderDetailResponse.totalMoney }}</td>
+        </tr>
+      </tbody>
+    </table>
+    <button class="btn btn-primary col-md-2" (click)="updateOrder()">
+      Save
+    </button>
+  </div>
+</div>

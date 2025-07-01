@@ -1,0 +1,111 @@
+<!-- HEADER -->
+<app-header></app-header>
+<!-- // HEADER -->
+
+<!-- LOGIN FORM -->
+<div class="container">
+  <form #loginForm="ngForm">
+    <div class="row">
+      <div class="col-md-6 offset-md-3">
+        <div class="login-form mx-auto">
+          <h2 class="login-header">Đăng nhập</h2>
+
+          <div class="form-group">
+            <label for="phone">Phone</label>
+            <input
+              type="text"
+              class="form-control"
+              name="phoneNumber"
+              id="phone"
+              [(ngModel)]="phoneNumber"
+            />
+            <div class="divider-nospace"></div>
+          </div>
+
+          <div class="form-group password-field">
+            <label for="password">Mật khẩu</label>
+            <input
+              type="{{ showPassword ? 'text' : 'password' }}"
+              name="password"
+              placeholder="password"
+              class="form-control"
+              id="password"
+              [(ngModel)]="password"
+            />
+            <i
+              class="password-toggle fas"
+              [ngClass]="showPassword ? 'fa-eye' : 'fa-eye-slash'"
+              (click)="togglePassword()"
+            ></i>
+            <div class="divider-nospace"></div>
+          </div>
+
+          <div class="form-group">
+            <div class="form-check checkbox-text">
+              <span style="display: flex">
+                <input
+                  type="checkbox"
+                  class="form-check-input"
+                  id="remember"
+                  name="remmberMe"
+                  [(ngModel)]="rememberMe"
+                />
+                <label for="remember" class="form-chek-label text-start">
+                  Ghi nhớ đăng nhập
+                </label>
+              </span>
+              <a href="#" class="register-link">Quên mật khẩu</a>
+            </div>
+          </div>
+
+          <div class="from-group">
+            <select
+              class="form-control access-right"
+              name="selectedRole"
+              [(ngModel)]="selectedRole"
+            >
+              <option selected disabled>Quyền đăng nhập</option>
+              <option *ngFor="let role of roles" [ngValue]="role">
+                {{ role.name }}
+              </option>
+            </select>
+          </div>
+          <button class="login-button" (click)="toLogin()">Đăng nhập</button>
+          <div class="divider"></div>
+
+          <!-- SOCIAL LOGIN -->
+          <div class="social-login-buttons">
+            <button
+              type="button"
+              (click)="loginWithGoogle()"
+              class="social-button google-button"
+            >
+              Đăng nhập với Google
+            </button>
+            <button
+              type="button"
+              (click)="loginWithFacebook()"
+              class="social-button facebook-button"
+            >
+              Đăng nhập với Facebook
+            </button>
+          </div>
+          <!-- // SOCIAL LOGIN -->
+
+          <p class="text-center">
+            Bạn chưa đăng ký?
+            <span>
+              <a class="register-link" (click)="createAccount()">
+                Tạo tài khoản</a
+              >
+            </span>
+          </p>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>
+<!-- // LOGIN FORM -->
+<!-- FOOTER  -->
+<app-footer></app-footer>
+<!-- // FOOTER -->

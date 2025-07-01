@@ -1,0 +1,86 @@
+<header>
+  <style></style>
+  <nav class="navbar navbar-expand-lg navbar-light bg-dark">
+    <div class="container">
+      <nav class="navbar navbar-expand-lg bg-body-tertiary">
+        <div class="container-fluid">
+          <a class="navbar-brand" routerLink="/home">Logo</a>
+
+          <button
+            class="navbar-toggler"
+            type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent"
+            aria-expanded="false"
+            aria-label="Toggle navigation"
+          >
+            <span class="navbar-toggler-icon"></span>
+          </button>
+
+          <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+              <li class="nav-item">
+                <a class="nav-link" routerLinkActive="active" routerLink="/home"
+                  >Trang chủ</a
+                >
+              </li>
+              <li class="nav-item">
+                <a
+                  class="nav-link"
+                  routerLinkActive="active"
+                  routerLink="/orders"
+                >
+                  <i class="fa-solid fa-cart-shopping"></i>
+                  Giỏ hàng</a
+                >
+              </li>
+
+              <li class="nav-item">
+                <ng-container *ngIf="userResponse">
+                  <ng-container
+                    ngbPopover="Tài khoản của tôi,Đơn mua,Đăng xuất"
+                    popoverTitle="User Actions"
+                    triggers="click"
+                    [placement]="'bottom'"
+                  >
+                    <a
+                      class="nav-link"
+                      [ngbPopover]="popoverContent"
+                      (click)="toggleDropdown($event)"
+                    >
+                      {{ userResponse.fullName }}
+                    </a>
+                    <ng-template #popoverContent>
+                      <div class="popover-list">
+                        <a
+                          class="popover-item"
+                          (click)="handleClickDropdownNav(0)"
+                          >Tài khoản của tôi</a
+                        >
+                        <a
+                          *ngIf="userResponse.roleId === 1"
+                          class="popover-item"
+                          (click)="handleClickDropdownNav(1)"
+                          >Đơn mua</a
+                        >
+                        <a
+                          class="popover-item"
+                          (click)="handleClickDropdownNav(2)"
+                          >Đăng xuất</a
+                        >
+                      </div>
+                    </ng-template>
+                  </ng-container>
+                </ng-container>
+                <ng-container *ngIf="!userResponse">
+                  <a class="nav-link" routerLink="/login">Đăng nhập</a>
+                </ng-container>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </nav>
+    </div>
+  </nav>
+</header>

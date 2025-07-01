@@ -1,0 +1,109 @@
+.container {
+  color: #fff;
+}
+
+.intro-section {
+  text-align: center;
+  color: #fff;
+  padding: 20px;
+}
+
+.product-header {
+  color: rgb(233, 66, 176);
+}
+
+// FORM INFO
+.form-control {
+  background-color: rgb(19, 23, 42);
+  border: 1px solid rgb(29, 33, 54);
+  color: #fff;
+}
+
+.form-control:focus {
+  border-color: #fff;
+  background-color: rgb(19, 23, 42);
+}
+
+.form-label {
+  color: white;
+}
+
+.product-header {
+  color: rgb(233, 66, 176);
+}
+
+.product-order {
+  color: rgb(105, 244, 181);
+}
+
+// TABLE PRODUCT
+table {
+  width: 100%;
+  border-radius: 10px;
+  border: none;
+  border-collapse: separate;
+  border: 1px solid #fff;
+  border-spacing: 0;
+  background-color: rgb(12, 13, 54);
+}
+
+th,
+td {
+  padding: 10px;
+  text-align: center;
+}
+
+.product-info {
+  display: flex;
+  align-items: center;
+}
+
+.product-image {
+  width: 100px;
+  height: 100px;
+  border-radius: 5px;
+  margin-right: 10px;
+}
+
+.product-name {
+  color: #fff;
+  margin-right: 10px;
+}
+
+.product-quantity {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  margin-top: 10px;
+}
+
+.border-wrapper {
+  border: 1px solid white;
+}
+
+.btn-gradient {
+  background-image: linear-gradient(
+    to right,
+    rgb(255, 64, 180),
+    rgb(126, 43, 237)
+  );
+  color: #fff;
+  border-radius: 30px;
+  width: 200px;
+}
+
+.mb-3:has(.ng-invalid.ng-touched) label,
+.form-group:has(.ng-invalid.ng-touched) label {
+  color: #f98b75;
+}
+
+input.ng-invalid.ng-touched {
+  background-color: #fbdcd6;
+  border-color: #f84e2c;
+  color: #333;
+}
+
+.invalid-feedback {
+  color: #f98b75;
+  display: block;
+}

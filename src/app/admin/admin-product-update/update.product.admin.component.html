@@ -1,0 +1,126 @@
+<div>
+  <!-- Form cập nhật thông tin sản phẩm -->
+  <div class="container">
+    <div class="row">
+      <div class="col-md-6 offset-md-3">
+        <h3>Update Product</h3>
+
+        <!-- UPDATE THUMBNAIL -->
+        <div class="thumbnail">
+          <div class="row mb-3">
+            <div class="thumbnail-container">
+              <img
+                [src]="urlthumbnail"
+                class="thumbnail-image"
+                alt="Thumbnail Image"
+              />
+            </div>
+          </div>
+          <div class="form-group mb-3">
+            <label for="thumbnail">Change images Thumbnail:</label>
+            <input
+              type="file"
+              id="thumbnail"
+              name="image"
+              (change)="changeThumbnail($event)"
+              accept="image/*"
+            />
+          </div>
+        </div>
+
+        <form (ngSubmit)="updateProduct()">
+          <!-- UPDATE PRODUCTDTO -->
+          <div class="form-group">
+            <label for="name">Name:</label>
+            <input
+              type="text"
+              id="name"
+              [(ngModel)]="productDto.name"
+              name="name"
+              class="form-control"
+              required
+            />
+          </div>
+
+          <div class="form-group mb-3">
+            <label for="price">Price:</label>
+            <input
+              type="text"
+              id="price"
+              [(ngModel)]="productDto.price"
+              name="price"
+              class="form-control col-md-3"
+              required
+            />
+          </div>
+
+          <div class="form-group mb-3">
+            <label for="description">Description:</label>
+            <textarea
+              id="description"
+              [(ngModel)]="productDto.description"
+              name="description"
+              class="form-control"
+              required
+            ></textarea>
+          </div>
+
+          <div class="form-group mb-3">
+            <label for="category">Category:</label>
+            <select
+              id="category"
+              name="category"
+              class="form-control"
+              required
+              [(ngModel)]="productDto.categoryId"
+            >
+              <!-- Hiển thị danh sách các category -->
+              <option *ngFor="let category of categories" [value]="category.id">
+                {{ category.name }}
+              </option>
+            </select>
+          </div>
+
+          <!-- UPDATE PRODUCTIMAGES -->
+          <div class="row mb-3">
+            <div class="thumbnail-container">
+              <div
+                *ngFor="let urlImage of urlImages; let i = index"
+                class="thumbnail-item"
+                [ngClass]="{ active: i === currentImageIndex }"
+                (click)="thumbnailClick(i)"
+              >
+                <img
+                  [src]="urlImage"
+                  class="thumbnail-image"
+                  alt="Thumbnail Image"
+                />
+                <button
+                  type="button"
+                  class="btn btn-sm remove-image"
+                  (click)="deleteImage(urlImage)"
+                >
+                  <i class="fa fa-times-circle text-danger"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group mb-3">
+            <label for="images">Add images (up to 5):</label>
+            <input
+              type="file"
+              id="images"
+              name="images"
+              multiple
+              (change)="changeProductImages($event)"
+              accept="image/*"
+            />
+          </div>
+
+          <button type="submit" class="btn btn-primary">Update</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

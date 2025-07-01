@@ -1,0 +1,232 @@
+<!-- HEADER -->
+<app-header></app-header>
+<!-- // HEADER -->
+
+<!-- PRODUCTES -->
+<div class="container">
+  <div class="intro-section">
+    <h1>Đây là trang Order</h1>
+    <p>Trang này hiển thị danh sach các sản phẩm, kèm ảnh</p>
+    <p>Các bạn có thể chọn xem sản phẩm và mua hàng tại đây</p>
+  </div>
+
+  <div class="row">
+    <div class="col-md-6">
+      <h2 class="product-header">Thông tin người nhận</h2>
+      <!-- FORM -->
+      <form [formGroup]="orderForm">
+        <div class="mb-3">
+          <label for="name" class="form-label">Họ và tên</label>
+          <input
+            type="text"
+            id="name"
+            class="form-control"
+            name="fullName"
+            formControlName="fullName"
+          />
+          @if(validateFullName()){
+          <p class="invalid-feedback">Họ và tên là trường bắt buộc</p>
+          }
+        </div>
+
+        <div class="mb-3">
+          <label for="email" class="form-label">Email</label>
+          <input
+            type="email"
+            id="email"
+            class="form-control"
+            name="email"
+            formControlName="email"
+          />
+          @if(orderForm.get('email')!.invalid && orderForm.get('email')!.touched
+          && orderForm.get('email')!.dirty){
+
+          <div class="invalid-feedback">Email là trường bắt buộc</div>
+          }
+        </div>
+        <div class="mb-3">
+          <label for="phone" class="form-label">Số điện thoại</label>
+          <input
+            type="text"
+            id="phone"
+            class="form-control"
+            name="phoneNumber"
+            formControlName="phoneNumber"
+          />
+
+          @if(orderForm.get('phoneNumber')!.invalid &&
+          orderForm.get('phoneNumber')!.touched){
+          <div class="invalid-feedback">Số điện thoại là trường bắt buộc</div>
+          }
+        </div>
+        <div class="mb-3">
+          <label for="address" class="form-label">Địa chỉ</label>
+          <input
+            type="text"
+            id="address"
+            class="form-control"
+            name="shippingAddress"
+            formControlName="shippingAddress"
+          />
+
+          @if(orderForm.get('shippingAddress')!.invalid &&
+          orderForm.get('shippingAddress')!.touched){
+          <div class="invalid-feedback">Địa chỉ là trường bắt buộc</div>
+          }
+        </div>
+        <div class="mb-3">
+          <label for="note" class="form-label">Ghi chú</label>
+          <input
+            type="text"
+            id="note"
+            class="form-control"
+            name="note"
+            formControlName="note"
+          />
+        </div>
+        <div class="form-group">
+          <label for="shippingMethod"> Phương thức vận chuyển</label>
+          <select
+            name="shippingMethod"
+            id="shippingMethod"
+            class="form-control"
+            formControlName="shippingMethod"
+          >
+            <option value="express">Nhanh (Express)</option>
+            <option value="normal">Thường (Normal)</option>
+          </select>
+
+          @if (orderForm.get('shippingMethod')!.invalid &&
+          orderForm.get('shippingMethod')!.touched) {
+          <div class="invalid-feedback">
+            Phương thức vận chuyển là trường bắt buộc
+          </div>
+          }
+        </div>
+        <div class="form-group">
+          <label for="paymentMethod"> Phương thức thanh toán</label>
+          <select
+            name="paymentMethod"
+            id="paymentMethod"
+            class="form-control"
+            formControlName="paymentMethod"
+          >
+            <option value="cod">Thanh toán khi nhận hàng (COD)</option>
+            <option value="vnpay">Thanh toán bằng VNPAY</option>
+          </select>
+
+          @if (orderForm.get('paymentMethod')!.invalid &&
+          orderForm.get('paymentMethod')!.touched) {
+          <div class="invalid-feedback">Lựa chọn phương thước thanh toán</div>
+          }
+        </div>
+      </form>
+      <!-- // FORM -->
+    </div>
+
+    <div class="col-md-6">
+      <h2 class="product-order">Sản phẩm đã đặt hàng</h2>
+      <table>
+        <thead>
+          <tr>
+            <th class="text-start" scope="col">Sản phẩm</th>
+            <th scope="col">Sản phẩm</th>
+            <th scope="col">Đơn giá</th>
+            <th scope="col">Tổng giá</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <ng-container *ngFor="let cartProduct of cartProducts; let i = index">
+            <tr>
+              <td>
+                <div class="product-info">
+                  <img
+                    [src]="cartProduct.product.urlImage"
+                    alt="Product Image"
+                    class="product-image"
+                  />
+                  <span class="product-name">{{
+                    cartProduct.product.name
+                  }}</span>
+                </div>
+              </td>
+              <td>
+                <div class="product-quantity">
+                  <div class="border-wrapper">
+                    <button (click)="decreaseQuantity(i)">-</button>
+                    {{ cartProduct.quantity }}
+                    <button (click)="increaseQuantity(i)">+</button>
+                  </div>
+                </div>
+              </td>
+              <td>
+                {{
+                  cartProduct.product.price
+                    | currency : "VND" : "symbol" : "1.0-0"
+                }}
+              </td>
+              <td>
+                {{
+                  cartProduct.product.price * cartProduct.quantity
+                    | currency : "VND" : "symbol" : "1.0-0"
+                }}
+              </td>
+              <td>
+                <button class="btn btn-danger" (click)="confirmDelete(i)">
+                  Xóa
+                </button>
+              </td>
+            </tr>
+          </ng-container>
+        </tbody>
+      </table>
+
+      <div class="text-start mt-3">
+        <h4 class="header-text text-end">
+          Tổng giá:
+          {{ orderDto.totalMoney | currency : "VND" : "symbol" : "1.0-0" }}
+        </h4>
+      </div>
+
+      <!-- COUPON -->
+      <div class="text-start mt-3">
+        <h4 class="product-header">Nhập Coupon</h4>
+        <div class="input-group">
+          <input
+            type="text"
+            class="form-control"
+            placeholder="HEAVEN, DISCOUNT20...."
+            #counponCode
+          />
+          <button
+            class="btn btn-gradient"
+            type="button"
+            (click)="applyCoupon(counponCode.value)"
+          >
+            Áp dụng
+          </button>
+        </div>
+
+        @if(priceCoupon > 0) {
+        <div class="text-start mt-3">
+          <h6 class="header-text text-end">
+            Bạn được discount:
+            {{ priceCoupon | currency : "VND" : "symbol" : "1.0-0" }} đ
+          </h6>
+        </div>
+        }
+
+        <div class="text-start mt-3">
+          <button class="btn btn-gradient" type="button" (click)="placeOrder()">
+            Đặt hàng
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- FOOTER  -->
+<app-footer></app-footer>
+<!-- // FOOTER -->
